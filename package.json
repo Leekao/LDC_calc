@@ -1,10 +1,10 @@
 {
   "name": "ldccalc",
   "version": "1.0.0",
-  "description": "",
+  "description": "simple backend calc for LDC home task",
   "main": "index.js",
   "scripts": { "test": "jasmine" },
-  "author": "",
+  "author": "erez.hochman@gmail.com",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",

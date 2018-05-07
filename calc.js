@@ -1,3 +1,25 @@
+const validate_request = (req) => {
+  if (!("body" in req)) return false
+  if (!("first_number" in req.body)) return false
+  if (!("second_number" in req.body)) return false
+  if (!("action" in req.body)) return false
+  const {action, first_number, second_number} = req.body
+  if (typeof(first_number) != 'string') return false
+  if (typeof(second_number) != 'string') return false
+  if (typeof(action) != 'string') return false
+  if (first_number.length === 0) return false
+  if (second_number.length === 0) return false
+  if (Object.keys(actions).indexOf(req.body.action) < 0)
+    return false
+  let f_number, s_number
+  f_number = parseFloat(first_number)
+  s_number = parseFloat(second_number)
+  if (isNaN(f_number)) return false
+  if (isNaN(s_number)) return false
+  console.log(f_number, s_number)
+  return true
+}
+
 const actions = {
   'add': (a,b) => {
   },
@@ -5,17 +27,11 @@ const actions = {
   }
 }
 
-const validate_request = (req) => {
-  return (
-    (req.body) &&
-    (req.body.action) &&
-    (req.body.first_number) &&
-    (req.body.second_number) &&
-    (Object.keys(actions).indexOf(req.body.action) > -1)
-  )
-}
-
 const calc_handler = (req, res) => {
+  if (!validate_request(req))
+    res.status(500).send({
+      'error': 'request invalid'
+    })
   return true
 }
 
