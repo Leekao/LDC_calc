@@ -1,5 +1,40 @@
 const {validate_request, calc_handler, actions} = require('../calc.js')
 
+describe("calc handler E2E", function() {
+  const res = {
+    _status: 0,
+    _json: {},
+    status: (status) => {
+      res._status = status
+      return res
+    },
+    send: (json) => {
+      res._json = json
+      return res
+    }
+  }
+  it("returns valid error response on error", () =>  {
+    let req = {body: {
+      'action': 'error',
+      'first_number': '1',
+      'second_number': '2'
+    }}
+    calc_handler(req, res)
+    expect(res._status).toBe(500)
+    expect(res._json.error).toBe('request invalid')
+  })
+  it("returns valid response on valid request", () =>  {
+    let req = {body: {
+      'action': 'add',
+      'first_number': '1',
+      'second_number': '2'
+    }}
+    calc_handler(req, res)
+    expect(res._status).toBe(200)
+    expect(res._json.response).toBe('3')
+  })
+})
+
 describe("calc actions", function() {
   it("knows how to add two numbers", () =>  {
     const result = actions['add'](1,2)
@@ -32,7 +67,7 @@ describe("request validation", function() {
     expect(validate_request(req)).toBe(true)
   })
 
-  it("fails gracefully when request has no params", () =>  {
+  it("fails gracefully when request has no params or invalid params", () =>  {
     req = {}
     expect(validate_request(req)).toBe(false)
     req = {body: {}}

@@ -4,9 +4,15 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => res.send('Hello World!'))
+const {calc_handler, actions} = require('./calc.js')
+const supported_actions = Object.keys(actions).join(' ,')
+app.get('/', (req, res) => {
+  res.send("The endpoint is \"/calc\", supported actions are: "+supported_actions)
+  }
+)
 
-//const {validate_request, calc_handler} = require('./calc.js')
-//app.post('/calc', calc_handler)
+app.post('/calc', calc_handler)
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+app.listen(3000, () => {
+  console.log("The endpoint is \"/calc\", supported actions are: "+supported_actions)
+})
