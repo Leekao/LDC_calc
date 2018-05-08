@@ -1,5 +1,25 @@
-const {validate_request, calc_handler} = require('../calc.js')
-console.log(validate_request)
+const {validate_request, calc_handler, actions} = require('../calc.js')
+
+describe("calc actions", function() {
+  it("knows how to add two numbers", () =>  {
+    const result = actions['add'](1,2)
+    expect(result).toBe(3.0)
+  })
+  it("knows how to subtract two numbers", () =>  {
+    const result = actions['sub'](2,1)
+    expect(result).toBe(1)
+  })
+  it("knows how to multiply two numbers", () =>  {
+    const result = actions['mul'](1,2)
+    expect(result).toBe(2.0)
+  })
+  it("knows how to divide two numbers", () =>  {
+    let result = actions['div'](4,2)
+    expect(result).toBe(2.0)
+    result = actions['div'](3,2)
+    expect(result).toBe(1.5)
+  })
+})
 
 describe("request validation", function() {
   let req = {}

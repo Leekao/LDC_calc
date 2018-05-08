@@ -22,8 +22,16 @@ const validate_request = (req) => {
 
 const actions = {
   'add': (a,b) => {
+    return (a+b)
   },
   'sub': (a,b) => {
+    return (a-b)
+  },
+  'mul': (a,b) => {
+    return (a*b)
+  },
+  'div': (a,b) => {
+    return (a/b)
   }
 }
 
@@ -32,7 +40,11 @@ const calc_handler = (req, res) => {
     res.status(500).send({
       'error': 'request invalid'
     })
+  const {action, first_number, second_number} = req.body
+  const f_number = parseFloat(first_number)
+  const s_number = parseFloat(second_number)
+  const result = actions[action](f_number, s_number)
   return true
 }
 
-module.exports = {validate_request, calc_handler}
+module.exports = {validate_request, calc_handler, actions}
