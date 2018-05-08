@@ -16,6 +16,7 @@ const validate_request = (req) => {
   s_number = parseFloat(second_number)
   if (isNaN(f_number)) return false
   if (isNaN(s_number)) return false
+  if ((action==='div') && (s_number === 0)) return false
   return true
 }
 

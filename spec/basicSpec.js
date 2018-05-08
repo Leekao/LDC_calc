@@ -116,5 +116,12 @@ describe("request validation", function() {
       }
     }
     expect(validate_request(req)).toBe(false)
+    req = {body: {
+      'action': 'div',
+      'first_number': '4',
+      'second_number': '0'
+      }
+    }
+    expect(validate_request(req)).toBe(false)
   });
 });
